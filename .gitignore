@@ -4,4 +4,4 @@
 .vagrant/
 
 ### BOSH ###
-.tmp/
+tmp/
