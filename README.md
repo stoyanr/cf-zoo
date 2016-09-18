@@ -7,9 +7,10 @@ You need:
 * git
 * [VirtualBox](https://www.virtualbox.org)
 * [Vagrant](https://www.vagrantup.com)
+* [CF CLI]()
 * internet access without proxy
 
-# Start the VM
+# Provision a VM
 
 Clone the project and start the VM with
 
@@ -23,3 +24,22 @@ If the provisioning scripts fail you can resume them with:
 ```
 vagrant provision
 ```
+
+# Start using Cloud Foundry
+
+0. Create and target a CF org and space:
+
+  ```bash
+  cf login -a api.bosh-lite.com --skip-ssl-validation -u admin -p admin
+  cf create-org cf
+  cf target -o cf
+  cf create-space test
+  cf target -s test
+  ```
+
+0. Push your application:
+
+  ```bash
+  cd <app-directory>
+  cf push my-app
+  ```
