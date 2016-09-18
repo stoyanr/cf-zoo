@@ -12,16 +12,15 @@ You need:
 
 # Provision a VM
 
-Clone the project and start the VM with
-
-```
+Clone the project and start the VM with:
+```bash
 git clone https://github.com/hsiliev/cf-dev.git
 cd cf-dev
 vagrant up
 ```
 
 If the provisioning scripts fail you can resume them with:
-```
+```bash
 vagrant provision
 ```
 
