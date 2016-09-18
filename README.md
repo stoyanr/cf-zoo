@@ -1,4 +1,4 @@
-# cf-lite
+# cf-zoo
 This repo provides an easy way to try out [Cloud Foundry](https://github.com/cloudfoundry/cf-release) on your laptop or desktop. It installs Cloud Foundry and the [MySQL Broker](https://github.com/cloudfoundry/cf-mysql-broker).
 
 # Prerequisites
@@ -14,8 +14,8 @@ You need:
 
 Clone the project and start the VM with:
 ```bash
-git clone https://github.com/hsiliev/cf-dev.git
-cd cf-dev
+git clone https://github.com/hsiliev/cf-zoo.git
+cd cf-zoo
 vagrant up
 ```
 
@@ -32,8 +32,8 @@ vagrant provision
   cf login -a api.bosh-lite.com --skip-ssl-validation -u admin -p admin
   cf create-org cf
   cf target -o cf
-  cf create-space test
-  cf target -s test
+  cf create-space zoo
+  cf target -s zoo
   ```
 
 0. Push your application:
