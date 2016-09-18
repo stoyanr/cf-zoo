@@ -1,4 +1,7 @@
-This repo provides an easy way to try out [Cloud Foundry](https://github.com/cloudfoundry/cf-release) on your laptop or desktop. It installs Cloud Foundry and the [MySQL Broker](https://github.com/cloudfoundry/cf-mysql-broker).
+# Project
+This project provides an easy way to try out [Cloud Foundry](https://github.com/cloudfoundry/cf-release) on your laptop or desktop. 
+
+It installs Cloud Foundry and the [MySQL Broker](https://github.com/cloudfoundry/cf-mysql-broker) and aims to provide an easy way to try out other BOSH deployments as well.
 
 # Prerequisites
 
