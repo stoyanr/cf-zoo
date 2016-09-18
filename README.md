@@ -1,4 +1,3 @@
-# cf-zoo
 This repo provides an easy way to try out [Cloud Foundry](https://github.com/cloudfoundry/cf-release) on your laptop or desktop. It installs Cloud Foundry and the [MySQL Broker](https://github.com/cloudfoundry/cf-mysql-broker).
 
 # Prerequisites
