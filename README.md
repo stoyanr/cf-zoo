@@ -7,7 +7,7 @@ You need:
 * git
 * [VirtualBox](https://www.virtualbox.org)
 * [Vagrant](https://www.vagrantup.com)
-* [CF CLI]()
+* [CF CLI](https://github.com/cloudfoundry/cli#downloads)
 * internet access without proxy
 
 # Provision a VM
