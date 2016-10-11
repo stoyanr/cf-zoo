@@ -31,7 +31,7 @@ pushd cf-mysql-release
   bosh -n deploy
 
   bosh run errand broker-registrar
-  bosh run errand acceptance-tests
+  bosh run errand smoke-tests
 popd
 
 touch .mysql_deployed
