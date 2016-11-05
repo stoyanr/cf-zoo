@@ -5,3 +5,7 @@
 
 ### BOSH ###
 tmp/
+
+### Deploy manifests ###
+deployments/
+

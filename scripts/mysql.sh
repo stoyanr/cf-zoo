@@ -12,11 +12,10 @@ bosh upload release mysql-release.tgz --skip-if-exists
 
 rm -rf release.MF
 tar -zxvf mysql-release.tgz ./release.MF
-VERSION=$(tail release.MF -n 1 | awk '{print $2}')
+VERSION=$(cat release.MF | awk '{if (NR == 2) {print $2}}')
 rm -rf release.MF
-VERSION="${VERSION%\'}"
-VERSION="${VERSION#\'}"
-echo "Using CF version $VERSION ..."
+VERSION="${VERSION//\"/}"
+echo "Using MySQL release version $VERSION ..."
 
 if [ ! -d cf-mysql-release ]; then
   git clone https://github.com/cloudfoundry/cf-mysql-release.git
@@ -27,6 +26,7 @@ pushd cf-mysql-release
 
   sudo gem install bundler
   sudo ./scripts/generate-bosh-lite-manifest
+  cp cf-mysql.yml /vagrant/deployments/
 
   bosh -n deploy
 

@@ -28,6 +28,7 @@ pushd cf-release
   sudo gem install bundler
   sudo ./scripts/generate-bosh-lite-dev-manifest
   sudo chown -R vagrant:vagrant bosh-lite
+  cp bosh-lite/deployments/cf.yml /vagrant/deployments/
 
   bosh -n deploy
 popd

@@ -12,3 +12,4 @@ if [ ! -f /usr/local/bin/spiff ]; then
   rm spiff_linux_amd64.zip
 fi
 
+mkdir -p /vagrant/deployments
