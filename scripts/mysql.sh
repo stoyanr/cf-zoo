@@ -34,5 +34,7 @@ pushd cf-mysql-release
   bosh run errand smoke-tests
 popd
 
+rm -rf mysql-release.tgz
+
 touch .mysql_deployed
 

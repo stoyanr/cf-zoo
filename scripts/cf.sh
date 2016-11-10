@@ -33,4 +33,12 @@ pushd cf-release
   bosh -n deploy
 popd
 
+cf login -a api.bosh-lite.com -u admin -p admin --skip-ssl-validation
+cf create-org test
+cf target -o test
+cf create-space test
+cf target -o test -s test
+
+rm -rf cf-release.tgz
+
 touch .cf_deployed
