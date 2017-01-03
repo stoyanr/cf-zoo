@@ -26,6 +26,11 @@ If the provisioning scripts fail you can resume them with:
 vagrant provision
 ```
 
+After VM restart you can do:
+```bash
+./scripts/redeploy.sh
+```
+
 # Start using Cloud Foundry
 
 0. Create and target a CF org and space:
