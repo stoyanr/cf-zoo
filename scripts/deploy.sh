@@ -3,7 +3,7 @@
 ###
 ### CF
 ###
-if [ -f .cf_deployed ]; then
+if [ ! -f .cf_deployed ]; then
   pushd cf-release
     bosh deployment bosh-lite/deployments/cf.yml
     bosh -n deploy
@@ -23,7 +23,7 @@ fi
 ###
 ### Diego
 ###
-if [ -f .cf_deployed ]; then
+if [ ! -f .diego_deployed ]; then
   pushd diego-release
     bosh deployment bosh-lite/deployments/diego.yml
     bosh -n deploy

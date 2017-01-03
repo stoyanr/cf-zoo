@@ -1,17 +1,12 @@
 #!/bin/bash -ex
 
-DIEGO_VERSION=1.5.0
-GARDEN_VERSION=1.0.4
-CFLINUX_VERSION=1.44.0
-
-echo "Will use versions:"
-echo "   diego            : $DIEGO_VERSION"
-echo "   garden-runc      : $GARDEN_VERSION"
-echo "   cflinuxfs2-rootfs: $CFLINUX_VERSION"
-
 if [ -f .diego_deployed ]; then
   exit 0
 fi
+
+DIEGO_VERSION=1.5.0
+GARDEN_VERSION=1.0.4
+CFLINUX_VERSION=1.44.0
 
 bosh -n target 127.0.0.1 lite
 bosh login admin admin
