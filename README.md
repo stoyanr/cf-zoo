@@ -1,5 +1,5 @@
 # Project
-This project provides an easy way to try out [Cloud Foundry](https://github.com/cloudfoundry/cf-release) on your laptop or desktop. 
+This project provides an easy way to try out [Cloud Foundry](https://www.cloudfoundry.org/) on your laptop or desktop. 
 
 It installs [Cloud Foundry](https://github.com/cloudfoundry/cf-release), [Diego](https://github.com/cloudfoundry/diego-release) and the [MySQL Broker](https://github.com/cloudfoundry/cf-mysql-broker) and aims to provide an automated way to try out other BOSH deployments as well.
 
