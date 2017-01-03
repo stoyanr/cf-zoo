@@ -9,6 +9,8 @@ Vagrant.configure('2') do |config|
   config.vm.provision "shell", keep_color: true, path: "scripts/os-setup.sh"
   config.vm.provision "shell", keep_color: true, privileged: false, path: "scripts/stemcell.sh"
   config.vm.provision "shell", keep_color: true, privileged: false, path: "scripts/cf.sh"
+  config.vm.provision "shell", keep_color: true, privileged: false, path: "scripts/diego.sh"
+  config.vm.provision "shell", keep_color: true, privileged: false, path: "scripts/deploy.sh"
   config.vm.provision "shell", keep_color: true, privileged: false, path: "scripts/mysql.sh"
   config.vm.provision "shell", keep_color: true, privileged: false, path: "scripts/cleanup.sh"
 end

@@ -9,3 +9,6 @@ tmp/
 ### Deploy manifests ###
 deployments/
 
+### Intellij ###
+.idea/
+*.iml
