@@ -33,10 +33,15 @@ After VM restart you can do:
 
 # Start using Cloud Foundry
 
+0. Login to CF
+
+  ```bash
+  ./scripts/login.sh
+  ```
+  
 0. Create and target a CF org and space:
 
   ```bash
-  cf login -a api.bosh-lite.com --skip-ssl-validation -u admin -p admin
   cf create-org cf
   cf target -o cf
   cf create-space zoo
