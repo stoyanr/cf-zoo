@@ -39,15 +39,6 @@ After VM restart you can do:
   ./scripts/login.sh
   ```
   
-0. Create and target a CF org and space:
-
-  ```bash
-  cf create-org cf
-  cf target -o cf
-  cf create-space zoo
-  cf target -s zoo
-  ```
-
 0. Push your application:
 
   ```bash
