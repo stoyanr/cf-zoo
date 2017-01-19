@@ -35,6 +35,7 @@ if [ ! -f .diego_deployed ]; then
 
   cf login -a api.bosh-lite.com -u admin -p admin --skip-ssl-validation
   cf enable-feature-flag diego_docker
+  cf enable-feature-flag task_creation
 
   touch .diego_deployed
 fi
