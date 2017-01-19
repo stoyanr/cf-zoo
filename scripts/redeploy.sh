@@ -19,3 +19,4 @@ cf create-space test
 cf target -o test -s test
 
 cf enable-feature-flag diego_docker
+cf enable-feature-flag task_creation
