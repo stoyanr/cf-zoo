@@ -39,6 +39,13 @@ After VM restart you can do:
   ./scripts/login.sh
   ```
   
+  On Windows:
+  
+  ```
+  .\scripts\add-route.bat
+  cf login -a api.bosh-lite.com -u admin -p admin --skip-ssl-validation
+  ```
+
 0. Push your application:
 
   ```bash
