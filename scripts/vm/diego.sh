@@ -11,13 +11,13 @@ bosh login admin admin
 
 source versions
 
-wget --progress=dot:giga -c "http://bosh.io/d/github.com/cloudfoundry/diego-release?v=$DIEGO_VERSION" -O diego-release.tgz &
+wget --progress=dot:giga -c "http://bosh.io/d/github.com/cloudfoundry/diego-release?v=$DIEGO_VERSION" -O diego-release.tgz
 bosh upload release diego-release.tgz --skip-if-exists
 
-wget --progress=dot:giga -c "http://bosh.io/d/github.com/cloudfoundry/garden-runc-release?v=$GARDEN_VERSION" -O garden-runc-release.tgz &
+wget --progress=dot:giga -c "http://bosh.io/d/github.com/cloudfoundry/garden-runc-release?v=$GARDEN_VERSION" -O garden-runc-release.tgz
 bosh upload release garden-runc-release.tgz --skip-if-exists
 
-wget --progress=dot:giga -c "http://bosh.io/d/github.com/cloudfoundry/cflinuxfs2-rootfs-release?v=$CFLINUX_VERSION" -O cflinuxfs2-rootfs-release.tgz &
+wget --progress=dot:giga -c "http://bosh.io/d/github.com/cloudfoundry/cflinuxfs2-rootfs-release?v=$CFLINUX_VERSION" -O cflinuxfs2-rootfs-release.tgz
 bosh upload release cflinuxfs2-rootfs-release.tgz --skip-if-exists
 
 if [ ! -d diego-release ]; then
