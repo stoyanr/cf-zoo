@@ -1,4 +1,6 @@
-#!/bin/bash -ex
+#!/usr/bin/env bash
+
+set -e -x
 
 if [ -f .mysql_deployed ]; then
   exit 0
@@ -7,7 +9,7 @@ fi
 bosh -n target 127.0.0.1 lite
 bosh login admin admin
 
-wget --progress=dot:giga -c http://bosh.io/d/github.com/cloudfoundry/cf-mysql-release -O mysql-release.tgz
+wget -c http://bosh.io/d/github.com/cloudfoundry/cf-mysql-release -O mysql-release.tgz
 bosh upload release mysql-release.tgz --skip-if-exists
 
 rm -rf release.MF

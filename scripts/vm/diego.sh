@@ -1,15 +1,15 @@
-#!/bin/bash -ex
+#!/usr/bin/env bash
+
+set -e -x
 
 if [ -f .diego_deployed ]; then
   exit 0
 fi
 
-DIEGO_VERSION=1.5.0
-GARDEN_VERSION=1.0.4
-CFLINUX_VERSION=1.44.0
-
 bosh -n target 127.0.0.1 lite
 bosh login admin admin
+
+source versions
 
 wget --progress=dot:giga -c "http://bosh.io/d/github.com/cloudfoundry/diego-release?v=$DIEGO_VERSION" -O diego-release.tgz
 bosh upload release diego-release.tgz --skip-if-exists
@@ -25,7 +25,10 @@ if [ ! -d diego-release ]; then
 fi
 
 pushd diego-release
-  git checkout v$DIEGO_VERSION
+  git checkout v${DIEGO_VERSION}
+
+  echo "Co-locating Diego on a single VM ..."
+  cp manifest-generation/bosh-lite-stubs/colocated-instance-count-overrides.yml manifest-generation/bosh-lite-stubs/instance-count-overrides.yml
 
   sudo SQL_FLAVOR='postgres' ./scripts/generate-bosh-lite-manifests
   sudo chown -R vagrant:vagrant bosh-lite

@@ -1,8 +1,7 @@
-#!/bin/bash -ex
+#!/usr/bin/env bash
 
-rm -rf bosh-warden-boshlite-ubuntu-trusty-go_agent.tgz
-
-set +x
+rm wait
+rm wget.log*
 
 echo ""
 echo "*************************************"
