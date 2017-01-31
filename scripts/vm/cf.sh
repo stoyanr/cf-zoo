@@ -2,26 +2,23 @@
 
 set -e -x
 
-if [ -f .cf_deployed ]; then
+if [ -f .deployed ]; then
   exit 0
-fi
-
-bosh -n target 127.0.0.1 lite
-bosh login admin admin
-
-if [ ! -d cf-release ]; then
-  git clone --recurse-submodules https://github.com/cloudfoundry/cf-release
 fi
 
 source versions
 
+wget --progress=dot:giga -c https://bosh.io/d/github.com/cloudfoundry/cf-release?v=${CF_VERSION} -O cf-release.tgz
+
+bosh -n target 127.0.0.1 lite
+bosh login admin admin
+bosh upload release cf-release.tgz --skip-if-exists
+
+if [ ! -d cf-release ]; then
+  git clone https://github.com/cloudfoundry/cf-release
+fi
+
 pushd cf-release
-  git checkout ${CF_SHA}
-
+  git checkout v${CF_VERSION}
   sudo gem install bundler
-  sudo ./scripts/generate-bosh-lite-dev-manifest
-  sudo chown -R vagrant:vagrant bosh-lite/deployments/cf.yml
-
-  cp bosh-lite/deployments/cf.yml /vagrant/deployments/
-
 popd

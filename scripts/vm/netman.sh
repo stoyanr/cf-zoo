@@ -2,18 +2,24 @@
 
 set -e -x
 
-if [ -f .netman_deployed ]; then
+if [ -f .deployed ]; then
   exit 0
 fi
 
-wget --progress=dot:giga -c "http://bosh.io/d/github.com/cloudfoundry-incubator/netman-release?v=$NETMAN_VERSION" -O netman-release.tgz
-bosh upload release netman-release.tgz --skip-if-exists
+source versions
 
 if [ ! -d cf-networking-release ]; then
   git clone https://github.com/cloudfoundry-incubator/cf-networking-release
 fi
 
 pushd cf-networking-release
-  ./scripts/generate-bosh-lite-manifests
-  cp bosh-lite/deployments/diego.yml /vagrant/deployments/
+  git checkout v${NETMAN_VERSION}
+
+  bosh upload release releases/cf-networking/cf-networking-${NETMAN_VERSION}.yml
+
+  sudo ./scripts/generate-bosh-lite-manifests
+  sudo chown -R vagrant:vagrant bosh-lite
+
+  cp bosh-lite/deployments/cf_networking.yml /vagrant/deployments/
+  cp bosh-lite/deployments/diego_cf_networking.yml /vagrant/deployments/
 popd
