@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -e -x
 
 if [ ! -f .apt-get-updated ]; then
   apt-get -y update
@@ -17,5 +17,5 @@ fi
 # Enable netman
 modprobe br_netfilter
 
-mkdir $TMPDIR
+mkdir /home/vagrant/tmp
 mkdir -p /vagrant/deployments

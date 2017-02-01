@@ -1,9 +1,11 @@
-#!/usr/bin/env bash -e
+#!/usr/bin/env bash
+
+set -e
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-bosh -d $SCRIPT_DIR/../deployments/cf.yml -n deploy --recreate
-bosh -d $SCRIPT_DIR/../deployments/diego.yml -n deploy --recreate
+bosh -d $SCRIPT_DIR/../deployments/cf_networking.yml -n deploy --recreate
+bosh -d $SCRIPT_DIR/../deployments/diego_cf_networking.yml -n deploy --recreate
 bosh -d $SCRIPT_DIR/../deployments/cf-mysql.yml -n deploy --recreate
 
 $SCRIPT_DIR/add-route.sh
