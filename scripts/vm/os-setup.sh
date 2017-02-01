@@ -17,5 +17,9 @@ fi
 # Enable netman
 modprobe br_netfilter
 
-mkdir /home/vagrant/tmp
+if [ ! -d /home/vagrant/tmp ]; then
+  mkdir /home/vagrant/tmp
+fi
+chown vagrant:vagrant /home/vagrant/tmp
+
 mkdir -p /vagrant/deployments
