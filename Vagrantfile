@@ -3,7 +3,7 @@ Vagrant.configure('2') do |config|
 
   config.vm.provider :virtualbox do |v, override|
     override.vm.box_version = '9000.137.0'
-    v.memory = 6144
+    v.memory = 8192
   end
 
   config.vm.provision "file", source: "scripts/vm/versions", destination: "versions"
@@ -15,5 +15,6 @@ Vagrant.configure('2') do |config|
   config.vm.provision "shell", keep_color: true, privileged: false, path: "scripts/vm/netman.sh"
   config.vm.provision "shell", keep_color: true, privileged: false, path: "scripts/vm/deploy.sh"
   config.vm.provision "shell", keep_color: true, privileged: false, path: "scripts/vm/mysql.sh"
+  config.vm.provision "shell", keep_color: true, privileged: false, path: "scripts/vm/app.sh"
   config.vm.provision "shell", keep_color: true, privileged: false, path: "scripts/vm/cleanup.sh"
 end

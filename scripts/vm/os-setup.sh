@@ -17,4 +17,5 @@ fi
 # Enable netman
 modprobe br_netfilter
 
+mkdir $TMPDIR
 mkdir -p /vagrant/deployments
