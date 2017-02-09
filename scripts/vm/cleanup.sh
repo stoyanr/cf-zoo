@@ -10,6 +10,12 @@ fi
 #  - https://github.com/mitchellh/vagrant/issues/343
 #  - https://github.com/chef/bento
 
+echo "Deleting all Linux headers ..."
+dpkg --list \
+  | awk '{ print $2 }' \
+  | grep 'linux-headers' \
+  | xargs apt-get -y purge;
+
 echo "Removing unused Linux kernels ..."
 # keeps the current kernel and does not touch the virtual packages,
 # e.g. 'linux-image-generic', etc.
