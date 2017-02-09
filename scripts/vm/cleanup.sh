@@ -10,27 +10,6 @@ fi
 #  - https://github.com/mitchellh/vagrant/issues/343
 #  - https://github.com/chef/bento
 
-echo "Deleting all Linux headers ..."
-dpkg --list \
-  | awk '{ print $2 }' \
-  | grep 'linux-headers' \
-  | xargs apt-get -y purge;
-
-echo "Removing unused Linux kernels ..."
-# keeps the current kernel and does not touch the virtual packages,
-# e.g. 'linux-image-generic', etc.
-dpkg --list \
-    | awk '{ print $2 }' \
-    | grep 'linux-image-.*-generic' \
-    | grep -v `uname -r` \
-    | xargs apt-get -y purge;
-
-echo "Deleting Linux source ..."
-dpkg --list \
-    | awk '{ print $2 }' \
-    | grep linux-source \
-    | xargs apt-get -y purge;
-
 echo "Deleting development packages ..."
 dpkg --list \
     | awk '{ print $2 }' \
@@ -65,12 +44,14 @@ rm -rf /usr/share/doc/*
 echo "Removing caches ..."
 find /var/cache -type f -exec rm -rf {} \;
 
-Echo "Deleting logs from install ..."
+echo "Deleting logs from install ..."
 find /var/log/ -name *.log -exec rm -f {} \;
 
 echo "Zeroing free space to aid VM compression ..."
+set +e
 dd if=/dev/zero of=/EMPTY bs=1M
 rm -f /EMPTY
+set -e
 
 echo "Removing bash history ..."
 unset HISTFILE
@@ -83,14 +64,18 @@ find /var/log -type f | while read f; do echo -ne '' > $f; done;
 echo "Whiting out root ..."
 count=$(df --sync -kP / | tail -n1  | awk -F ' ' '{print $4}')
 count=$(($count-1))
+set +e
 dd if=/dev/zero of=/tmp/whitespace bs=1M count=$count || echo "dd exit code $? is suppressed";
 rm /tmp/whitespace
+set -e
 
 echo "Whiting out /boot ..."
 count=$(df --sync -kP /boot | tail -n1 | awk -F ' ' '{print $4}')
 count=$(($count-1))
+set +e
 dd if=/dev/zero of=/boot/whitespace bs=1M count=$count || echo "dd exit code $? is suppressed";
 rm /boot/whitespace
+set -e
 
 echo "Removing swap ..."
 set +e
@@ -110,11 +95,10 @@ if [ "x${swapuuid}" != "x" ]; then
     /sbin/mkswap -U "$swapuuid" "$swappart";
 fi
 
+set +x
 sync;
 
 touch .cleaned
-
-set +x
 
 echo ""
 echo "*************************************"
