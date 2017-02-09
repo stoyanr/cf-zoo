@@ -1,5 +1,115 @@
 #!/usr/bin/env bash
 
+set -e -x
+
+if [ -f .cleaned ]; then
+  exit 0
+fi
+
+# Credit:
+#  - https://github.com/mitchellh/vagrant/issues/343
+#  - https://github.com/chef/bento
+
+echo "Removing unused Linux kernels ..."
+# keeps the current kernel and does not touch the virtual packages,
+# e.g. 'linux-image-generic', etc.
+dpkg --list \
+    | awk '{ print $2 }' \
+    | grep 'linux-image-.*-generic' \
+    | grep -v `uname -r` \
+    | xargs apt-get -y purge;
+
+echo "Deleting Linux source ..."
+dpkg --list \
+    | awk '{ print $2 }' \
+    | grep linux-source \
+    | xargs apt-get -y purge;
+
+echo "Deleting development packages ..."
+dpkg --list \
+    | awk '{ print $2 }' \
+    | grep -- '-dev$' \
+    | xargs apt-get -y purge;
+
+echo "Deleting docs packages ..."
+dpkg --list \
+    | awk '{ print $2 }' \
+    | grep -- '-doc$' \
+    | xargs apt-get -y purge;
+
+echo "Deleting X11 libraries ..."
+apt-get -y purge libx11-data xauth libxmuu1 libxcb1 libx11-6 libxext6;
+
+echo "Deleting obsolete networking ..."
+apt-get -y purge ppp pppconfig pppoeconf;
+
+echo "Deleting oddities ..."
+apt-get -y purge popularity-contest installation-report command-not-found command-not-found-data friendly-recovery;
+
+echo "Cleaning up apt-get ..."
+apt-get -y autoremove;
+apt-get -y clean;
+
+echo "Removing VirtualBox additions ISO ..."
+rm -f VBoxGuestAdditions_*.iso VBoxGuestAdditions_*.iso.?;
+
+echo "Removing docs ..."
+rm -rf /usr/share/doc/*
+
+echo "Removing caches ..."
+find /var/cache -type f -exec rm -rf {} \;
+
+Echo "Deleting logs from install ..."
+find /var/log/ -name *.log -exec rm -f {} \;
+
+echo "Zeroing free space to aid VM compression ..."
+dd if=/dev/zero of=/EMPTY bs=1M
+rm -f /EMPTY
+
+echo "Removing bash history ..."
+unset HISTFILE
+rm -f /root/.bash_history
+rm -f /home/vagrant/.bash_history
+
+echo "Cleaning log files ..."
+find /var/log -type f | while read f; do echo -ne '' > $f; done;
+
+echo "Whiting out root ..."
+count=$(df --sync -kP / | tail -n1  | awk -F ' ' '{print $4}')
+count=$(($count-1))
+dd if=/dev/zero of=/tmp/whitespace bs=1M count=$count || echo "dd exit code $? is suppressed";
+rm /tmp/whitespace
+
+echo "Whiting out /boot ..."
+count=$(df --sync -kP /boot | tail -n1 | awk -F ' ' '{print $4}')
+count=$(($count-1))
+dd if=/dev/zero of=/boot/whitespace bs=1M count=$count || echo "dd exit code $? is suppressed";
+rm /boot/whitespace
+
+echo "Removing swap ..."
+set +e
+swapuuid="`/sbin/blkid -o value -l -s UUID -t TYPE=swap`";
+case "$?" in
+    2|0) ;;
+    *) exit 1 ;;
+esac
+set -e
+
+if [ "x${swapuuid}" != "x" ]; then
+    # Whiteout the swap partition to reduce box size
+    # Swap is disabled till reboot
+    swappart="`readlink -f /dev/disk/by-uuid/$swapuuid`";
+    /sbin/swapoff "$swappart";
+    dd if=/dev/zero of="$swappart" bs=1M || echo "dd exit code $? is suppressed";
+    /sbin/mkswap -U "$swapuuid" "$swappart";
+fi
+
+sync;
+
+touch .cleaned
+
+set +x
+
 echo ""
 echo "*************************************"
 echo "Provisioning completed successfully !"

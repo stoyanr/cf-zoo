@@ -16,5 +16,5 @@ Vagrant.configure('2') do |config|
   config.vm.provision "shell", keep_color: true, privileged: false, path: "scripts/vm/deploy.sh"
   config.vm.provision "shell", keep_color: true, privileged: false, path: "scripts/vm/mysql.sh"
   config.vm.provision "shell", keep_color: true, privileged: false, path: "scripts/vm/app.sh"
-  config.vm.provision "shell", keep_color: true, privileged: false, path: "scripts/vm/cleanup.sh"
+  config.vm.provision "shell", keep_color: true, path: "scripts/vm/cleanup.sh"
 end
