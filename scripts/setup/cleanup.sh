@@ -10,42 +10,11 @@ fi
 #  - https://github.com/mitchellh/vagrant/issues/343
 #  - https://github.com/chef/bento
 
-echo "Deleting development packages ..."
-dpkg --list \
-    | awk '{ print $2 }' \
-    | grep -- '-dev$' \
-    | xargs apt-get -y purge;
-
-echo "Deleting docs packages ..."
-dpkg --list \
-    | awk '{ print $2 }' \
-    | grep -- '-doc$' \
-    | xargs apt-get -y purge;
-
-echo "Deleting X11 libraries ..."
-apt-get -y purge libx11-data xauth libxmuu1 libxcb1 libx11-6 libxext6;
-
-echo "Deleting obsolete networking ..."
-apt-get -y purge ppp pppconfig pppoeconf;
-
-echo "Deleting oddities ..."
-apt-get -y purge popularity-contest installation-report command-not-found command-not-found-data friendly-recovery;
-
-echo "Cleaning up apt-get ..."
-apt-get -y autoremove;
-apt-get -y clean;
-
-echo "Removing VirtualBox additions ISO ..."
-rm -f VBoxGuestAdditions_*.iso VBoxGuestAdditions_*.iso.?;
-
-echo "Removing docs ..."
-rm -rf /usr/share/doc/*
-
 echo "Removing caches ..."
 find /var/cache -type f -exec rm -rf {} \;
 
-echo "Deleting logs from install ..."
-find /var/log/ -name *.log -exec rm -f {} \;
+echo "Cleaning log files ..."
+find /var/log -type f | while read f; do echo -ne '' > $f; done;
 
 echo "Zeroing free space to aid VM compression ..."
 set +e
@@ -57,9 +26,6 @@ echo "Removing bash history ..."
 unset HISTFILE
 rm -f /root/.bash_history
 rm -f /home/vagrant/.bash_history
-
-echo "Cleaning log files ..."
-find /var/log -type f | while read f; do echo -ne '' > $f; done;
 
 echo "Whiting out root ..."
 count=$(df --sync -kP / | tail -n1  | awk -F ' ' '{print $4}')

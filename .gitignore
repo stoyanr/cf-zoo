@@ -2,6 +2,7 @@
 
 ### Vagrant ###
 .vagrant/
+package.box
 
 ### BOSH ###
 tmp/
