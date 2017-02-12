@@ -4,7 +4,7 @@ set -e -x
 
 if [ ! -f .deployed ]; then
   bosh deployment cf-networking-release/bosh-lite/deployments/cf_networking.yml
-  bosh -n deploy
+  bosh -n deploy --no-redact
 
   cf login -a api.bosh-lite.com -u admin -p admin --skip-ssl-validation
   cf create-org test
@@ -13,7 +13,7 @@ if [ ! -f .deployed ]; then
   cf target -o test -s test
 
   bosh deployment cf-networking-release/bosh-lite/deployments/diego_cf_networking.yml
-  bosh -n deploy
+  bosh -n deploy --no-redact
 
   rm -f cf-release.tgz
   rm -f diego-release.tgz

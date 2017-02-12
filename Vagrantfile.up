@@ -6,5 +6,8 @@ Vagrant.configure('2') do |config|
     override.vm.network :private_network, ip: '192.168.59.4', id: :local
   end
 
-  config.vm.provision "shell", keep_color: true, path: "scripts/vm/setup.sh"
+  config.vm.provision "shell", keep_color: true, path: "scripts/vm/bosh.sh"
+  config.vm.provision "shell", keep_color: true, path: "scripts/vm/cf.sh"
+  config.vm.provision "shell", keep_color: true, path: "scripts/vm/app.sh"
+  config.vm.provision "shell", keep_color: true, path: "scripts/vm/cleanup.sh"
 end

@@ -31,9 +31,9 @@ If the provisioning scripts fail you can resume them with:
 vagrant provision
 ```
 
-After VM restart you can do:
+After VM or host computer restart you can fix the installation by running:
 ```bash
-./scripts/redeploy.sh
+vagrant provision
 ```
 
 # Start using Cloud Foundry
@@ -54,6 +54,6 @@ After VM restart you can do:
 0. Push your application:
 
   ```bash
-  cd <app-directory>
+  cd path/to/my-app
   cf push my-app
   ```

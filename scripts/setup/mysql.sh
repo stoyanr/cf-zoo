@@ -30,7 +30,7 @@ pushd cf-mysql-release
   sudo ./scripts/generate-bosh-lite-manifest
   cp cf-mysql.yml /vagrant/deployments/
 
-  bosh -n deploy
+  bosh -n deploy --no-redact
 
   bosh run errand broker-registrar
   bosh run errand smoke-tests
