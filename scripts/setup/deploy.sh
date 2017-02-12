@@ -3,6 +3,9 @@
 set -e -x
 
 if [ ! -f .deployed ]; then
+  bosh -n target 127.0.0.1 lite
+  bosh login admin admin
+
   bosh deployment cf-networking-release/bosh-lite/deployments/cf_networking.yml
   bosh -n deploy --no-redact
 

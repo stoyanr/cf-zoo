@@ -6,6 +6,9 @@ if [ -f .cleaned ]; then
   exit 0
 fi
 
+bosh -n target 127.0.0.1 lite
+bosh login admin admin
+
 bosh -n delete deployment --force cf-mysql
 bosh -n delete deployment --force cf-warden
 bosh -n delete deployment --force cf-warden-diego

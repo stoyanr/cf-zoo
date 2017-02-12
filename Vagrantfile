@@ -9,4 +9,5 @@ Vagrant.configure('2') do |config|
   config.vm.provision "shell", keep_color: true, path: "scripts/vm/bosh.sh"
   config.vm.provision "shell", keep_color: true, path: "scripts/vm/cf.sh"
   config.vm.provision "shell", keep_color: true, path: "scripts/vm/app.sh"
+  config.vm.provision "shell", keep_color: true, path: "scripts/vm/cleanup.sh"
 end
